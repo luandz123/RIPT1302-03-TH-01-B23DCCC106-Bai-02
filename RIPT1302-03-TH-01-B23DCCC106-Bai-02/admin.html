@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Trang quản trị</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f1f1f1;
+        margin: 20px;
+      }
+
+      h1 {
+        color: #333;
+      }
+
+      h2 {
+        margin-top: 30px;
+        color: #333;
+      }
+
+      form {
+        margin-bottom: 20px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+
+      input[type="text"],
+      input[type="email"] {
+        width: 300px;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+      }
+
+      button[type="submit"] {
+        padding: 8px 16px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      th,
+      td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+
+      th {
+        background-color: #4caf50;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Trang quản trị</h1>
+
+    <h2>Thêm sinh viên</h2>
+    <form id="addStudentForm">
+      <label for="name">Tên sinh viên:</label>
+      <input type="text" id="name" required /><br />
+
+      <label for="studentId">Mã sinh viên:</label>
+      <input type="text" id="studentId" required /><br />
+
+      <label for="address">Địa chỉ:</label>
+      <input type="text" id="address" required /><br />
+
+      <label for="phone">Số điện thoại:</label>
+      <input type="text" id="phone" required /><br />
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" required /><br />
+
+      <button type="submit">Thêm</button>
+    </form>
+
+    <h2>Danh sách sinh viên</h2>
+    <table id="studentTable">
+      <tr>
+        <th>Tên sinh viên</th>
+        <th>Mã sinh viên</th>
+        <th>Địa chỉ</th>
+        <th>Số điện thoại</th>
+        <th>Email</th>
+      </tr>
+    </table>
+
+    <script>
+      // Mảng lưu trữ danh sách sinh viên
+      var students = [];
+
+      // Lấy biểu mẫu thêm sinh viên
+      var addStudentForm = document.getElementById("addStudentForm");
+
+      // Lấy bảng danh sách sinh viên
+      var studentTable = document.getElementById("studentTable");
+
+      // Xử lý sự kiện khi biểu mẫu được gửi đi (thêm sinh viên)
+      addStudentForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        // Lấy giá trị từ biểu mẫu
+        var name = document.getElementById("name").value;
+        var studentId = document.getElementById("studentId").value;
+        var address = document.getElementById("address").value;
+        var phone = document.getElementById("phone").value;
+        var email = document.getElementById("email").value;
+
+        // Tạo đối tượng sinh viên
+        var student = {
+          name: name,
+          studentId: studentId,
+          address: address,
+          phone: phone,
+          email: email,
+        };
+
+        // Thêm sinh viên vào mảng
+        students.push(student);
+
+        // Cập nhật bảng danh sách sinh viên
+        updateStudentTable();
+
+        // Đặt lại giá trị của biểu mẫu
+        addStudentForm.reset();
+      });
+
+      // Cập nhật bảng danh sách sinh viên
+      function updateStudentTable() {
+        // Xóa tất cả các hàng trong bảng trừ hàng tiêu đề
+        while (studentTable.rows.length > 1) {
+          studentTable.deleteRow(1);
+        }
+
+        // Tạo các hàng mới chotừng sinh viên
+        for (var i = 0; i < students.length; i++) {
+          var student = students[i];
+
+          var row = studentTable.insertRow(-1);
+          var nameCell = row.insertCell(0);
+          var studentIdCell = row.insertCell(1);
+          var addressCell = row.insertCell(2);
+          var phoneCell = row.insertCell(3);
+          var emailCell = row.insertCell(4);
+
+          nameCell.innerHTML = student.name;
+          studentIdCell.innerHTML = student.studentId;
+          addressCell.innerHTML = student.address;
+          phoneCell.innerHTML = student.phone;
+          emailCell.innerHTML = student.email;
+        }
+      }
+    </script>
+  </body>
+</html>
